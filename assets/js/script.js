@@ -1,83 +1,154 @@
-var quizCont = document.getElementById("quiz-container");
-var quizQuestions = document.getElementById('quiz')
-var quizRules = document.getElementById("quiz-rules");
-var startQuizBtn = document.getElementById("start-quiz");
+var startQuizBtn = document.getElementById("start-quiz"); 
 
-quizRules.textContent =
-  "Welcome to the Javascript fundamentals quiz! Answer the questions to test your Javascript knowledge. This quiz does have a time limit. If you answer the question incorrectly, you will be penalized with ten seconds off your timer. To begin the quiz, select Start Quiz below.";
+startQuizBtn.onclick = function () {
+  console.log('button click')
+  showQuestions();
+};
 
-quizRules.style.textAlign = "center";
-quizRules.setAttribute("style", "color:black", "padding:15px");
+var myQuestions = [
+  {
+    question: "Javascript is an _______ language?",
+    answers: ["Object-Oriented", "Object-Based", "Procedural", "None of the above"],
+    correctAnswer: 1,
+  },
+  {
+    question: "Which of the following keywords is used to define a variable in Javascript?",
+    answers: ["var", "bar", "jar", "bob"],
+    correctAnswer: 1,
+  },
+  {
+    question: "Which of the following methods is used to access HTML elements using Javascript?",
+    answers: ["targetElement", "thatOneElement", "getElementById", "idElement"],
+    correctAnswer: 3,
+  },
+];
 
-quizCont.style.textAlign = 'center'
+// for (var i = 0; myQuestions.answers.length; i++) {
+//   var liEl = document.createElement("li"); 
+//   liEl.textContent = myQuestions.answers[i].text; 
+//   liEl.appendChild(liEl); 
+// }
 
-quizQuestions.style.textAlign = 'left'
-quizQuestions.style.marginTop = '25px'
-quizQuestions.style.marginLeft = '200px'
+var questionIndex = 0 
+
+console.log(myQuestions[questionIndex])
+console.log(myQuestions[questionIndex].question)
+
+function showQuestions() {
+
+  startQuizBtn.style.display = "none"; 
+
+  var quizAnswers = document.getElementById("answers"); 
+
+  var questionTitle = myQuestions[questionIndex].question
+
+  var questionh3 = document.getElementById("questions")
+
+  questionh3.textContent = questionTitle
+  quizAnswers.textContent = ""
+
+  myQuestions[questionIndex].answers.forEach(function(q) {
+
+  // var answerBtn = document.createElement("button");
+  var ul = document.getElementById("answers");
+  var li = document.createElement("li");
+  var answerBtn = document.createElement("button");
+  li.appendChild(answerBtn); 
+  ul.appendChild(li)
+
+  answerBtn.textContent = q
+  answerBtn.style.padding = "10px"
+  li.style.listStyle = "none"
+  li.style.marginTop = "5px"
+  li.style.marginBottom = "5px"
 
 
-document.addEventListener("DOMContentLoaded", function(event){
-    startQuizBtn.addEventListener('click', function(event) {
-    buildQuiz()
-    })
-})
+  quizAnswers.appendChild(answerBtn)
 
-var hidden = false;
-function action() {
-    hidden = !hidden;
-    if(hidden) {
-        document.getElementById('start-quiz').style.visibility = 'hidden';
-    } else {
-        document.getElementById('start-quiz').style.visibility = 'visible';
-    }
+  answerBtn.addEventListener("click", checkAnswer)
+
+console.log(q)
+} )
+
 }
 
-function buildQuiz() {
-      const output = [];
-    
-      myQuestions.forEach((currentQuestion, questionNumber) => {
-        const answers = [];
-    
-        for (var letter in currentQuestion.answers) {
-          answers.push(
-            `<label>
-            <input type="radio" name="question${questionNumber}" value="${letter}">
-            ${letter} :
-            ${currentQuestion.answers[letter]}
-          </label>`
-          );
-        }
-    
-        output.push(
-          `<div class="question"> ${currentQuestion.question} </div>
-        <div class="answers"> ${answers.join("")} </div>`
-        );
-      });
-    
-      quizContainer.innerHTML = output.join("");
-    }
-    
-    
-    var quizContainer = document.getElementById("quiz");
-    var showQuizBtn = document.getElementById('start-quiz')
-    var myQuestions = [{
-        question: "Who is the strongest?",
-        answers: {
-          a: "Superman",
-          b: "The Terminator",
-          c: "Waluigi, obviously"
-        },
-        correctAnswer: "c"
-      },
-      {
-        question: "What is the best site ever created?",
-        answers: {
-          a: "SitePoint",
-          b: "Simple Steps Code",
-          c: "Trick question; they're both the best"
-        },
-        correctAnswer: "c"
-      }
-    ]
-    
+function checkAnswer () {
 
+questionIndex++
+
+showQuestions()
+
+}
+
+
+
+
+
+
+
+
+// create another function to have the question increase in index by one and then call show questions again so the questions can be updated
+
+
+
+
+// document.addEventListener("DOMContentLoaded", function(event){
+//     startQuizBtn.addEventListener('click', function(event) {
+//     buildQuiz()
+//     })
+// })
+
+//   function buildQuiz() {
+
+//       var output = [];
+
+//       myQuestions.forEach((currentQuestion, questionNumber) => {
+//         const answers = [];
+
+//         for (var letter in currentQuestion.answers) {
+//           answers.push(
+//             `<label>
+//             <input type="radio" name="question${questionNumber}" value="${letter}">
+//             ${letter} :
+//             ${currentQuestion.answers[letter]}
+//           </label>`
+//           );
+//         }
+
+//         output.push(
+//           `<div class="question"> ${currentQuestion.question} </div>
+//         <div class="answers"> ${answers.join("")} </div>`
+//         );
+//       });
+
+//       quizContainer.innerHTML = output.join("");
+//     }
+
+//     var myQuestions = [ {
+//         question: "What is an array?",
+//         answers: {
+//           a: "",
+//           b: "",
+//           c: ""
+//         },
+//         correctAnswer: ""
+//       },
+//       {
+//         question: "",
+//         answers: {
+//           a: "",
+//           b: "",
+//           c: ""
+//         },
+//         correctAnswer: "c"
+//       },
+//       {
+//         question: "",
+//         answers: {
+//           a: "",
+//           b: "",
+//           c: ""
+//         },
+//         correctAnswer: "c"
+//       }
+//     ]

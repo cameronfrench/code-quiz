@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Code Quiz</title>
-    <link rel="stylesheet" href="/assets/css/style.css" />
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Code Quiz Challenge</h1>
-        <p id="quiz-rules"></p>
-      </header>
-      <div id=quiz-container>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <title>Code Quiz</title>
+</head>
+<body>
+  <div class="wrapper">
+    <header>
+      <h1>Code Quiz Challenge</h1>
+      <p id="quiz-rules">Welcome to the Javascript fundamentals quiz! Answer the questions to test your Javascript knowledge. This quiz does have a time limit. If you answer the question incorrectly, you will be penalized with ten seconds off your timer. To begin the quiz, select Start Quiz below. </p>
+    </header>
+    <div id=quiz-container>
+      <div id="start-button-container">
         <button id="start-quiz">Start Quiz</button>
-        <div id="quiz"></div>
       </div>
-    
-
-    <script src="/assets/js/script.js"></script>
-  </body>
+      <h3 id="questions"></h3>
+      <ul id="answers"></ul>
+    </div>
+  
+  <script src="/assets/js/script.js"></script>
+</body>
 </html>

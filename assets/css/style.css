@@ -46,5 +46,30 @@ body {
     margin-bottom: 30px;
   }
 
+#start-quiz {
+    padding: 10px; 
+}
+
+#start-button-container {
+   display: block;
+   margin-left: auto;
+   margin-right: auto;
+   width: 8em; 
+}
+
+#questions {
+    display: block;
+    padding-top: 15px; 
+    padding-bottom: 15px; 
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%; 
+}
+
+#answers { 
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
 
 
