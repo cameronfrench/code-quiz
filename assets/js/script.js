@@ -1,41 +1,60 @@
 var startQuizBtn = document.getElementById("start-quiz"); 
 
+// start quiz button with a fuction to trigger the quiz questions (showQuestons())
 startQuizBtn.onclick = function () {
   console.log('button click')
-  showQuestions();
+  showQuestions(), setTime();
 };
 
+var timeEl = document.querySelector(".time");
+
+var resultsEl = document.getElementById("results");
+
+var secondsLeft = 15;
+// function that starts timer when you click start quiz
+function setTime() {
+  // Sets interval in variable
+  var timerInterval = setInterval(function() {
+    secondsLeft--;
+    timeEl.textContent = secondsLeft; 
+
+    if(secondsLeft === 0) {
+      // Stops execution of action at set interval
+      clearInterval(timerInterval);
+      // Calls function to create and append results of quiz
+    }
+
+  }, 1000);
+}
+
+
+// the questions that will be asked during the quiz 
 var myQuestions = [
   {
     question: "Javascript is an _______ language?",
     answers: ["Object-Oriented", "Object-Based", "Procedural", "None of the above"],
-    correctAnswer: 1,
+    correctId: 1,
   },
   {
     question: "Which of the following keywords is used to define a variable in Javascript?",
     answers: ["var", "bar", "jar", "bob"],
-    correctAnswer: 1,
+    correctId: 1,
   },
   {
     question: "Which of the following methods is used to access HTML elements using Javascript?",
     answers: ["targetElement", "thatOneElement", "getElementById", "idElement"],
-    correctAnswer: 3,
+    correctId: 3,
   },
 ];
-
-// for (var i = 0; myQuestions.answers.length; i++) {
-//   var liEl = document.createElement("li"); 
-//   liEl.textContent = myQuestions.answers[i].text; 
-//   liEl.appendChild(liEl); 
-// }
 
 var questionIndex = 0 
 
 console.log(myQuestions[questionIndex])
 console.log(myQuestions[questionIndex].question)
 
+// main function to show quiz question in a sequential order after clicking start quiz 
 function showQuestions() {
-
+  
   startQuizBtn.style.display = "none"; 
 
   var quizAnswers = document.getElementById("answers"); 
@@ -49,106 +68,47 @@ function showQuestions() {
 
   myQuestions[questionIndex].answers.forEach(function(q) {
 
-  // var answerBtn = document.createElement("button");
+  // takes answers and turns them into buttons below questions
   var ul = document.getElementById("answers");
   var li = document.createElement("li");
   var answerBtn = document.createElement("button");
   li.appendChild(answerBtn); 
   ul.appendChild(li)
-
+// button styling
   answerBtn.textContent = q
   answerBtn.style.padding = "10px"
   li.style.listStyle = "none"
   li.style.marginTop = "5px"
   li.style.marginBottom = "5px"
 
-
   quizAnswers.appendChild(answerBtn)
 
   answerBtn.addEventListener("click", checkAnswer)
+})
+}
 
-console.log(q)
-} )
+var scoreCounter = 0;
+var answerIndex = 0;
+
+function userScore() {
+
+  var quizAnswers = document.getElementById("answers");
+  quizAnswers.textContent = ""
+  var index = answerBtn.dataset.id
+  var selectedAnswer = index;
+  var correct = myQuestions[questionIndex].correctId;
+
+  if (selectedAnswer === correct) {
+    scoreCounter = scoreCounter + 1;
+  }
+  
+
 
 }
 
-function checkAnswer () {
-
-questionIndex++
-
+function checkAnswer() {
+  questionIndex++
 showQuestions()
 
 }
-
-
-
-
-
-
-
-
-// create another function to have the question increase in index by one and then call show questions again so the questions can be updated
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function(event){
-//     startQuizBtn.addEventListener('click', function(event) {
-//     buildQuiz()
-//     })
-// })
-
-//   function buildQuiz() {
-
-//       var output = [];
-
-//       myQuestions.forEach((currentQuestion, questionNumber) => {
-//         const answers = [];
-
-//         for (var letter in currentQuestion.answers) {
-//           answers.push(
-//             `<label>
-//             <input type="radio" name="question${questionNumber}" value="${letter}">
-//             ${letter} :
-//             ${currentQuestion.answers[letter]}
-//           </label>`
-//           );
-//         }
-
-//         output.push(
-//           `<div class="question"> ${currentQuestion.question} </div>
-//         <div class="answers"> ${answers.join("")} </div>`
-//         );
-//       });
-
-//       quizContainer.innerHTML = output.join("");
-//     }
-
-//     var myQuestions = [ {
-//         question: "What is an array?",
-//         answers: {
-//           a: "",
-//           b: "",
-//           c: ""
-//         },
-//         correctAnswer: ""
-//       },
-//       {
-//         question: "",
-//         answers: {
-//           a: "",
-//           b: "",
-//           c: ""
-//         },
-//         correctAnswer: "c"
-//       },
-//       {
-//         question: "",
-//         answers: {
-//           a: "",
-//           b: "",
-//           c: ""
-//         },
-//         correctAnswer: "c"
-//       }
-//     ]
+  
