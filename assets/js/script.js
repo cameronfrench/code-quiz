@@ -1,114 +1,134 @@
-var startQuizBtn = document.getElementById("start-quiz"); 
+var startQuizBtn = document.getElementById("start-quiz");
+var resultsEl = document.getElementById("results");
+var quizTimer = document.querySelector(".time");
+var timer = 15;
+var questionIndex = 0;
 
 // start quiz button with a fuction to trigger the quiz questions (showQuestons())
 startQuizBtn.onclick = function () {
-  console.log('button click')
-  showQuestions(), setTime();
+  showQuestions(), countdownTimer();
+  // reset timer and score
+  userScore = 0;
 };
 
-var timeEl = document.querySelector(".time");
-
-var resultsEl = document.getElementById("results");
-
-var secondsLeft = 15;
 // function that starts timer when you click start quiz
-function setTime() {
-  // Sets interval in variable
-  var timerInterval = setInterval(function() {
-    secondsLeft--;
-    timeEl.textContent = secondsLeft; 
+function countdownTimer() {
+  var timeLeft = setInterval(() => {
+    if (timer >= 0 || questionIndex < 3) {
+      quizTimer.textContent = timer + " seconds left";
+      timer--;
+      questionIndex ++;
+    } else {
+      clearInterval(timeLeft);
 
-    if(secondsLeft === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function to create and append results of quiz
+      endQuiz(); 
     }
-
   }, 1000);
 }
-
-
-// the questions that will be asked during the quiz 
+// the questions that will be asked during the quiz
 var myQuestions = [
   {
-    question: "Javascript is an _______ language?",
-    answers: ["Object-Oriented", "Object-Based", "Procedural", "None of the above"],
-    correctId: 1,
+    questionTitle: "Javascript is an _______ language?",
+    options: [
+      "Object-Oriented",
+      "Object-Based",
+      "Procedural",
+      "None of the above",
+    ],
+    answer: "Object-Based",
   },
   {
-    question: "Which of the following keywords is used to define a variable in Javascript?",
-    answers: ["var", "bar", "jar", "bob"],
-    correctId: 1,
+    questionTitle:
+      "Which of the following keywords is used to define a variable in Javascript?",
+    options: ["var", "bar", "jar", "bob"],
+    answer: "var",
   },
   {
-    question: "Which of the following methods is used to access HTML elements using Javascript?",
-    answers: ["targetElement", "thatOneElement", "getElementById", "idElement"],
-    correctId: 3,
+    questionTitle:
+      "Which of the following methods is used to access HTML elements using Javascript?",
+    options: ["targetElement", "thatOneElement", "getElementById", "idElement"],
+    answer: "getElementById",
   },
 ];
 
-var questionIndex = 0 
+var answerBtn0 = document.querySelector("#option0");
+var answerBtn1 = document.querySelector("#option1");
+var answerBtn2 = document.querySelector("#option2");
+var answerBtn3 = document.querySelector("#option3");
 
-console.log(myQuestions[questionIndex])
-console.log(myQuestions[questionIndex].question)
+var answers = [answerBtn0, answerBtn1, answerBtn2, answerBtn3];
 
-// main function to show quiz question in a sequential order after clicking start quiz 
+// main function to show quiz question in a sequential order after clicking start quiz
 function showQuestions() {
-  
-  startQuizBtn.style.display = "none"; 
+  startQuizBtn.style.display = "none";
+  var question = myQuestions[questionIndex];
+  var answerOptions = question.options;
 
-  var quizAnswers = document.getElementById("answers"); 
+  var questionEl = document.querySelector("#questions");
+  questionEl.textContent = question.questionTitle;
 
-  var questionTitle = myQuestions[questionIndex].question
+  for (var i = 0; i < answerOptions.length; i++) {
+    var answerChoices = answerOptions[i];
 
-  var questionh3 = document.getElementById("questions")
+    var answerBtn = answers[i];
 
-  questionh3.textContent = questionTitle
-  quizAnswers.textContent = ""
-
-  myQuestions[questionIndex].answers.forEach(function(q) {
-
-  // takes answers and turns them into buttons below questions
-  var ul = document.getElementById("answers");
-  var li = document.createElement("li");
-  var answerBtn = document.createElement("button");
-  li.appendChild(answerBtn); 
-  ul.appendChild(li)
-// button styling
-  answerBtn.textContent = q
-  answerBtn.style.padding = "10px"
-  li.style.listStyle = "none"
-  li.style.marginTop = "5px"
-  li.style.marginBottom = "5px"
-
-  quizAnswers.appendChild(answerBtn)
-
-  answerBtn.addEventListener("click", checkAnswer)
-})
-}
-
-var scoreCounter = 0;
-var answerIndex = 0;
-
-function userScore() {
-
-  var quizAnswers = document.getElementById("answers");
-  quizAnswers.textContent = ""
-  var index = answerBtn.dataset.id
-  var selectedAnswer = index;
-  var correct = myQuestions[questionIndex].correctId;
-
-  if (selectedAnswer === correct) {
-    scoreCounter = scoreCounter + 1;
+    answerBtn.textContent = answerChoices;
   }
-  
-
-
 }
 
-function checkAnswer() {
-  questionIndex++
-showQuestions()
-
+function correctAnswer(answerBtn) {
+  var correct = question.answer;
+  var question = myQuestions[questionIndex];
+  return answerBtn.textContent === correct;
 }
+
+// 
+
+function checkAnswer(event) {
+  var answerBtn = event.target;
+  // correct answer
+  if (correctAnswer(answerBtn)) {
+    score = score + 20;
+  }
+  // wrong answer
+  else {
+    if (timer > 10) {
+      timer = timer - 10;
+    } else {
+      timer = 0;
+      endQuiz();
+    }
+  }
+  questionIndex++;
+
+  // if no more questions, end quiz
+  if (questionIndex < questions.length) {
+    showQuestions();
+  } else {
+    endQuiz();
+  }
+}
+
+document
+  .querySelector("#answer-buttons")
+  .addEventListener("click", checkAnswer);
+
+function endQuiz() {
+  var finalScore = document.querySelector("#score");
+  finalScore.textContent = "You scored " + score;
+}
+
+
+
+
+// function userScore() {
+  //   var quizAnswers = document.getElementById("answers");
+  //   quizAnswers.textContent = "";
+  //   var index = answerBtn.dataset.id;
+  //   var selectedAnswer = index;
+  //   var correct = myQuestions[questionIndex].correctId;
   
+  //   if (selectedAnswer === correct) {
+  //     scoreCounter = scoreCounter + 1;
+  //   }
+  // }
